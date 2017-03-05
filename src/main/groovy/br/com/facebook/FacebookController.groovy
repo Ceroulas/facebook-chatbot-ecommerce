@@ -27,5 +27,6 @@ class FacebookController {
     @RequestMapping(value = '/webhook', method = RequestMethod.POST)
     receiveMessageFromFacebook(@RequestBody String message){
         println message
+        new ResponseEntity(HttpStatus.OK)
     }
 }
