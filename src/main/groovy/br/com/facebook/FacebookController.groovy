@@ -1,7 +1,7 @@
 package br.com.facebook
 
-import br.com.facebook.incoming.domain.MessageReceived
 import br.com.facebook.incoming.IncomingHandler
+import br.com.facebook.incoming.domain.MessageReceived
 import br.com.facebook.integration.FacebookApiClient
 import br.com.facebook.outgoing.OutgoingHandler
 import br.com.facebook.outgoing.domain.OutputMessage
@@ -10,11 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * Created by jonathan on 04/03/17.
