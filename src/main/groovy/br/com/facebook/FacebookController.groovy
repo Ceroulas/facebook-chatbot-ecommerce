@@ -1,5 +1,6 @@
 package br.com.facebook
 
+import br.com.facebook.handler.MessageHandler
 import br.com.facebook.incoming.IncomingHandler
 import br.com.facebook.incoming.domain.MessageReceived
 import br.com.facebook.integration.FacebookApiClient
@@ -20,16 +21,12 @@ import org.springframework.web.bind.annotation.*
 class FacebookController {
 
     @Value('${facebook.adapter.verify_token}')
-    String token
-    IncomingHandler incomingHandler
-    OutgoingHandler outgoingHandler
-    FacebookApiClient facebookApiClient
+    private String token
+    private MessageHandler handler
 
     @Autowired
-    FacebookController(IncomingHandler incomingHandler, OutgoingHandler outgoingHandler, FacebookApiClient facebookApiClient){
-        this.incomingHandler = incomingHandler
-        this.outgoingHandler = outgoingHandler
-        this.facebookApiClient = facebookApiClient
+    FacebookController(MessageHandler handler){
+        this.handler = handler
     }
 
     @RequestMapping(value  ='/webhook', method = RequestMethod.GET)
@@ -39,16 +36,10 @@ class FacebookController {
                 new ResponseEntity<>("invalid token: ${tokenToVerify}", HttpStatus.BAD_REQUEST)
     }
 
-    //@TODO - refatorar, remover logica de negocio para um handler
     @RequestMapping(value = '/webhook', method = RequestMethod.POST)
     receiveMessageFromFacebook(@RequestBody String message){
         log.info("Message received from Facebook: $message")
-
-        //@TODO - tratar is_echo
-        MessageReceived messageReceived = incomingHandler.processIncomingMessage(message)
-        OutputMessage outputMessage = outgoingHandler.tempOutgoingMessageBuilder(messageReceived)
-        facebookApiClient.sendFacebookMessage(outputMessage)
-
+        handler.handleMessageFromFacebook(message)
         new ResponseEntity(HttpStatus.OK)
     }
 }

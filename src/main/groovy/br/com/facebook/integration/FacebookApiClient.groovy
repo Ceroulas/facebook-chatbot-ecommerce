@@ -25,10 +25,10 @@ class FacebookApiClient {
     @Value('${facebook.adapter.page_access_token}')
     String token
 
-    //@TODO - adicionar body response para o facebook
     void sendFacebookMessage(OutputMessage message){
         String path = "$facebookUrl$token"
         String body = new ObjectMapper().writeValueAsString(message)
+        log.info("Message sent to facebook: $body")
         doPost(path, [:], String.class, body)
     }
 
@@ -42,10 +42,10 @@ class FacebookApiClient {
             query.each {k,v -> builder.queryParam(k, v)}
             def response = new RestTemplate().exchange(builder.build().encode().toUri(), HttpMethod.POST, e, result)
 
-            log.debug("Retorno panvel para $path $query: $response.statusCode - $response.body")
+            log.debug("Retorno facebook para $path $query: $response.statusCode - $response.body")
             return response.body
         } catch (HttpStatusCodeException ex) {
-            log.error("Retorno panvel para $path $query: $ex.statusCode - $ex.responseBodyAsString", ex)
+            log.error("Retorno facebook para $path $query: $ex.statusCode - $ex.responseBodyAsString", ex)
             if (ex.statusCode == HttpStatus.NOT_FOUND) {
                 return null
             }
