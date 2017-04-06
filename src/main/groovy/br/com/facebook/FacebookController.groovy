@@ -1,11 +1,6 @@
 package br.com.facebook
 
 import br.com.facebook.handler.MessageHandler
-import br.com.facebook.incoming.IncomingHandler
-import br.com.facebook.incoming.domain.MessageReceived
-import br.com.facebook.integration.FacebookApiClient
-import br.com.facebook.outgoing.OutgoingHandler
-import br.com.facebook.outgoing.domain.OutputMessage
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value

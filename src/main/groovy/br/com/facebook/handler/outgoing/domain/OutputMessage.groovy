@@ -1,4 +1,4 @@
-package br.com.facebook.outgoing.domain
+package br.com.facebook.handler.outgoing.domain
 
 import groovy.transform.Canonical
 

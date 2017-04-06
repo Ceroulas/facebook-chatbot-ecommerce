@@ -1,4 +1,4 @@
-package br.com.facebook.incoming.domain
+package br.com.facebook.handler.incoming.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -27,7 +27,7 @@ class Entry {
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class Messaging {
     Sender sender
-    br.com.facebook.outgoing.domain.Recipient recipient
+    br.com.facebook.handler.outgoing.domain.Recipient recipient
     Long timestamp
     Message message
     Read read

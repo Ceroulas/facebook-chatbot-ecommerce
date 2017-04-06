@@ -1,6 +1,6 @@
 package br.com.facebook.integration
 
-import br.com.facebook.outgoing.domain.OutputMessage
+import br.com.facebook.handler.outgoing.domain.OutputMessage
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Value
