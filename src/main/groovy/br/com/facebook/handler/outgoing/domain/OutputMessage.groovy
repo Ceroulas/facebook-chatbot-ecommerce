@@ -1,5 +1,6 @@
 package br.com.facebook.handler.outgoing.domain
 
+import br.com.facebook.handler.outgoing.template.Attachment
 import groovy.transform.Canonical
 
 /**
@@ -19,4 +20,5 @@ class Recipient{
 @Canonical
 class Message{
     String text
+    Attachment attachment
 }
