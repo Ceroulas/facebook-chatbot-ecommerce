@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*
 class FacebookController {
 
     @Value('${facebook.adapter.verify_token}')
-    private String token
-    private MessageHandler handler
+    String token
+    MessageHandler handler
 
     @Autowired
     FacebookController(MessageHandler handler){

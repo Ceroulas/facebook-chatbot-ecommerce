@@ -1,6 +1,7 @@
 package br.com.facebook.unit
 
 import br.com.facebook.FacebookController
+import br.com.facebook.handler.MessageHandler
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -14,11 +15,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by Jonathan on 05/03/2017.
  */
 class FacebookControllerTest extends Specification{
-    @Shared api = new FacebookController()
+    @Shared api = new FacebookController(handler)
 
+    @Shared MessageHandler handler
     def mockMvc = MockMvcBuilders.standaloneSetup(api).build()
 
     def setupSpec(){
+        handler = Mock(MessageHandler)
         api.token = 'mysecret_token_to_verify'
     }
 

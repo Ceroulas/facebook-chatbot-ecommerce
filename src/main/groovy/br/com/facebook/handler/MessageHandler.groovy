@@ -3,6 +3,8 @@ package br.com.facebook.handler
 import br.com.facebook.handler.incoming.IncomingHandler
 import br.com.facebook.handler.incoming.domain.MessageReceived
 import br.com.facebook.handler.incoming.domain.Messaging
+import br.com.facebook.handler.outgoing.domain.Recipient
+import br.com.facebook.handler.outgoing.domain.SenderAction
 import br.com.facebook.integration.FacebookApiClient
 import br.com.facebook.handler.outgoing.OutgoingHandler
 import br.com.facebook.handler.outgoing.domain.OutputMessage
@@ -32,8 +34,24 @@ class MessageHandler {
         MessageReceived messageReceived = incomingHandler.processIncomingMessage(message)
         Messaging messaging = outgoingHandler.getMessaging(messageReceived)
         if(!messaging.message?.isEcho && !messaging?.read) {
-            OutputMessage outputMessage = outgoingHandler.tempOutgoingMessageBuilder(messageReceived)
-            facebookApiClient.sendFacebookMessage(outputMessage)
+
+            markSeen(messaging)
+            typingOn(messaging)
+
+            List<OutputMessage> outputMessages = outgoingHandler.tempOutgoingMessageBuilder(messageReceived)
+            outputMessages.each { facebookApiClient.sendFacebookMessage(it) }
         }
+    }
+
+    private typingOn(Messaging messaging){
+        String userId = messaging.sender.id
+        OutputMessage typinOnMessage = new OutputMessage(recipient: new Recipient(id: userId), senderAction: SenderAction.typing_on.name())
+        facebookApiClient.sendFacebookMessage(typinOnMessage)
+    }
+
+    private markSeen(Messaging messaging){
+        String userId = messaging.sender.id
+        OutputMessage markSeenMessage = new OutputMessage(recipient: new Recipient(id: userId), senderAction: SenderAction.mark_seen.name())
+        facebookApiClient.sendFacebookMessage(markSeenMessage)
     }
 }
