@@ -6,6 +6,7 @@ import groovy.transform.Canonical
  * Created by jonathan on 23/04/17.
  */
 @Canonical
-class BuyButton extends Button{
-    
+class LogInButton extends Button{
+    String type = "account_link"
+    String url
 }
